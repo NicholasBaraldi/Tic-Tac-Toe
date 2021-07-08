@@ -49,6 +49,10 @@ class Board
         end
     end
 
+    def winner?
+        row_win?(marker) || column_win?(marker) || diagonal_win?(marker)
+    end
+
     def [](y,x)
         @grid[y][x]
     end
@@ -64,8 +68,8 @@ end
 
 b = Board.new
 
-b [0,2] = :x
-b [1,1] = :x
-b [2,0] = :x
+b [0,2] = :X
+b [1,1] = :X
+b [2,0] = :X
 b.print_grid
-puts b.diagonal_win?(:x)
+puts b.diagonal_win?(:X)
