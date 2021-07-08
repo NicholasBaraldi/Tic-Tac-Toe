@@ -65,11 +65,3 @@ class Board
         end
     end
 end
-
-b = Board.new
-
-b [0,2] = :X
-b [1,1] = :X
-b [2,0] = :X
-b.print_grid
-puts b.diagonal_win?(:X)
