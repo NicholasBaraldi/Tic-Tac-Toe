@@ -3,8 +3,6 @@ class Board
     HEIGHT = 3
     WIDTH = HEIGHT
 
-    attr_accessor :grid
-
     def initialize
         @grid = Array.new(HEIGHT) {Array.new(WIDTH, :" ")}
     end
@@ -49,7 +47,7 @@ class Board
         end
     end
 
-    def winner?
+    def winner?(marker)
         row_win?(marker) || column_win?(marker) || diagonal_win?(marker)
     end
 
