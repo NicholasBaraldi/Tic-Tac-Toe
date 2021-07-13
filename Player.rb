@@ -2,6 +2,11 @@ class Player
 
     ROW_MAP = (:A..:C).zip(0..2).to_h
 
+    FORMAT = {
+        row: ->(input) {ROW_MAP[input[0].upcase.to_sym]},
+        column: ->(input) {(input.to_i) -1}
+    }
+
     attr_reader :marker
 
     def initialize(name, marker)
@@ -11,35 +16,19 @@ class Player
     end
 
     def get_move
-        [get_row, get_col]
+        [get_coordinate(:row), get_coordinate(:column)]
     end
 
-    def get_row
+    private
+
+    def get_coordinate(axis)
         loop do
             print "> "
             input = gets
-            choice = format_row(input)
+            choice = FORMAT[axis].call(input)
             return choice if valid_choice?(choice);
-            puts "Invalid row."
+            puts "Invalid #{axis}"
         end
-    end
-
-    def get_col
-        loop do
-            print "> "
-            input = gets
-            choice = format_col(input)
-            return choice if valid_choice?(choice);
-            puts "Invalid column."
-        end
-    end
-
-    def format_row(input)
-        ROW_MAP[input[0].upcase.to_sym]
-    end
-
-    def format_col(input)
-        input.to_i - 1
     end
 
     def valid_choice?(choice)
