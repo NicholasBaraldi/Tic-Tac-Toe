@@ -7,13 +7,21 @@ class Game
         @board = Board.new
     end
 
-    def turn(player)
-        move = player.get_move
-        @board[*move] = player.marker
-        @board.winner?(player.marker)
+    def play_a_game
+        current_player, other_player = @players
+        until @winner do
+            turn(current_player)
+            current_player, other_player = other_player, current_player
+        end
+        puts @board.display
+        @winner
     end
 
-    def display_board
-        @board.display
+    def turn(player)
+        puts @board.display
+        puts "#{player.name}, pick a move."
+        move = player.get_move
+        @board[*move] = player.marker
+        @winner = player if @board.winner?(player)
     end
 end
