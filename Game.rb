@@ -17,7 +17,11 @@ class Game
             current_player, other_player = other_player, current_player
         end
         puts @board.display
-        @winner
+        announce_winner
+    end
+
+    def announce_winner
+        puts winner ? "#{winner.name} won!" : "It's a tie!"
     end
 
     def turn(player)

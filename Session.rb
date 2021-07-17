@@ -4,9 +4,10 @@ require_relative 'Player'
 class Session
 
     def initialize
+        puts "Welcome to tic tac toe."
         @players = [
-            Player.new("Max", :X),
-            Player.new("John", :O)
+            create_player(:X),
+            create_player(:O)
         ]
         @ties = 0
         play_loop
@@ -14,25 +15,26 @@ class Session
 
     private
 
+    def create_player(marker)
+        print "Who will play as #{marker}?\n> "
+        name = gets.chomp.strip
+        Player.new(name, marker)
+    end
+
     def play_loop
-        puts "Welcome to tic tac toe."
         loop do
             puts "Starting a new game."
             game = Game.new(@players)
-            @last_winner = game.winner
-            update_scores
+            update_scores(game.winner)
             display_scores
             break unless play_again?;
+            @players.reverse!
         end
         puts "Goodbye!"
     end
 
-    def update_scores
-        @last_winner ? @last_winner.increment_score : @ties += 1
-    end
-
-    def announce_winner
-        @last_winner ? "#{@last_winner.name} won!" : "It's a tie!"
+    def update_scores(winner)
+        winner ? winner.increment_score : @ties += 1
     end
 
     def play_again?
@@ -52,8 +54,6 @@ class Session
     end
 
     def display_scores
-        puts
-        puts announce_winner
         puts
         puts "SCOREBOARD:"
         puts @players.map {|player| "#{player.name}: #{player.score}"}
