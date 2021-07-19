@@ -1,7 +1,10 @@
 require_relative 'Game'
 require_relative 'Player'
+require_relative 'input_helper'
 
 class Session
+
+    include InputHelper
 
     def initialize
         puts "Welcome to tic tac toe."
@@ -16,7 +19,7 @@ class Session
     private
 
     def create_player(marker)
-        print "Who will play as #{marker}?\n> "
+        prompt "Who will play as #{marker}?"
         name = gets.chomp.strip
         Player.new(name, marker)
     end
@@ -39,7 +42,7 @@ class Session
 
     def play_again?
         puts
-        print "Play again?(y/n)\n> "
+        prompt "Play again?(y/n)"
         loop do
             answer = gets.strip[0].upcase
             case answer
@@ -48,7 +51,7 @@ class Session
             when "N"
                 return false
             else
-                print "Please answer with 'y' or 'n'.\n> "
+                prompt "Please answer with 'y' or 'n'."
             end
         end
     end

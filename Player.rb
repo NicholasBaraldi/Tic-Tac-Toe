@@ -1,4 +1,8 @@
+require_relative 'input_helper'
+
 class Player
+
+    include InputHelper
 
     ROW_MAP = (:A..:C).zip(0..2).to_h
 
