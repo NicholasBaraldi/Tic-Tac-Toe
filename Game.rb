@@ -1,6 +1,9 @@
 require_relative 'Board'
+require_relative 'input_helper'
 
 class Game
+
+    include InputHelper
 
     attr_reader :winner
 
@@ -26,7 +29,7 @@ class Game
 
     def turn(player)
         puts @board.display
-        puts "#{player.name}, pick a move."
+        prompt "#{player.name}, pick a move."
         loop do
             move = player.get_move
             break if @board.place_marker(move, player.marker);

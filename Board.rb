@@ -28,7 +28,7 @@ class Board
     end
 
     def place_marker(coordinates, marker)
-        y, x = coordinates
+        y, x = coordinates[0], coordinates[1]
         @grid[y][x] = marker if @grid[y][x] == :" "
     end
 

@@ -6,11 +6,6 @@ class Player
 
     ROW_MAP = (:A..:C).zip(0..2).to_h
 
-    FORMAT = {
-        row: ->(input) {ROW_MAP[input[0].upcase.to_sym]},
-        column: ->(input) {(input.to_i) -1}
-    }
-
     attr_reader :marker, :name, :score
 
     def initialize(name, marker)
@@ -24,18 +19,19 @@ class Player
     end
 
     def get_move
-        [get_coordinate(:row), get_coordinate(:column)]
-    end
-
-    private
-
-    def get_coordinate(axis)
+        valid_choice = []
         loop do
-            print "> "
             input = gets
-            choice = FORMAT[axis].call(input)
-            return choice if valid_choice?(choice);
-            puts "Invalid #{axis}"
+            choice = ROW_MAP[input[0].upcase.to_sym]
+            if valid_choice?(choice)
+                valid_choice << choice
+                choice = (input[1].to_i) -1
+                if valid_choice?(choice)
+                    valid_choice << choice
+                    return valid_choice
+                end
+            end
+            prompt "Invalid move"
         end
     end
 
